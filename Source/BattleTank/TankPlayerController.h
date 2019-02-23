@@ -15,10 +15,16 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 public:
-	virtual void BeginPlay() override;
+	
 	ATank* GetTankController() const;
 
+	virtual void Tick(float DeltaTime) override;
+
+protected:
+	virtual void BeginPlay() override;
+
 private:
-	
+	//aim turret at this location to fire
+	void AimAtCrosshair();	
 	
 };
