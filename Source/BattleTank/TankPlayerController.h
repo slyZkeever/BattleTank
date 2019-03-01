@@ -21,14 +21,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-private: //for functions
 
-	
-	void AimAtCrosshair();	//aim turret at this location to fire
-
-	ATank* GetTankController() const;
-	
-	bool GetSightRayHitLocation(FVector& HitLocation) const;
 
 private: //for variables 
 
@@ -38,6 +31,19 @@ private: //for variables
 	UPROPERTY(EditAnywhere)
 	float CrosshairYLocation = 0.5f;
 
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000.f;
+
+private: //for functions
+
+	void AimAtCrosshair();	//aim turret at this location to fire
+
+	ATank* GetTankController() const;
+
+	bool GetSightRayHitLocation(FVector& HitLocation) const;
+
 	bool GetLookDirection(FVector2D ScreenLocation, FVector &LookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 	
 };
