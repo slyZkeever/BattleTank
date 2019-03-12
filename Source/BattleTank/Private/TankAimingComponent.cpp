@@ -19,9 +19,6 @@ void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	/*OurTankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("Position Report reporting on(begin play) %s"), *OurTankName);*/
-		
 }
 
 
@@ -36,4 +33,3 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *GetNameSafe(GetOwner()), *HitLocation.ToString());
 }
-	
