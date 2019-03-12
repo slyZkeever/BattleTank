@@ -21,8 +21,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-
-
 private: //for variables 
 
 	UPROPERTY(EditAnywhere)

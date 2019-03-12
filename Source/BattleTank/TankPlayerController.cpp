@@ -42,7 +42,6 @@ void ATankPlayerController::AimAtCrosshair()
 		GetTankController()->AimAt(HitLocation);
 		//TODO tell controlled tank to aim at this location 
 	}
-	
 }
 
 //Get world location of line tracing hit object through crosshair, return true if hit landscape
