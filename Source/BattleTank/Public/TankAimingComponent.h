@@ -26,8 +26,7 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	void Test();
-
 private:
+
 	FString OurTankName;
 };

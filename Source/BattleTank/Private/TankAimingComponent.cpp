@@ -19,8 +19,8 @@ void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	OurTankName = GetOwner()->GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("Position Report reporting on %s"), *OurTankName);
+	/*OurTankName = GetOwner()->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("Position Report reporting on(begin play) %s"), *OurTankName);*/
 		
 }
 
@@ -34,15 +34,6 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	UE_LOG(LogTemp, Warning, TEXT("got owner: %s"), *OurTankName);
-
-	//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *OurTankName, *HitLocation.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *GetNameSafe(GetOwner()), *HitLocation.ToString());
 }
 	
-
-
-void UTankAimingComponent::Test()
-{
-	//UE_LOG(LogTemp, Warning, TEXT("into test function"));
-}
-
