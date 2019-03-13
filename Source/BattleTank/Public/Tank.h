@@ -3,6 +3,7 @@
 #pragma once
 
 #include "TankAimingComponent.h"
+#include "Components/StaticMeshComponent.h"
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -21,7 +22,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Tank)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Tank) //so that it is saved after construction
 	UTankAimingComponent* TankAimingComponent;
 	
 
@@ -33,4 +34,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = Tank)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
 };
