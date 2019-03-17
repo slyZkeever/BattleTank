@@ -38,4 +38,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Tank)
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 
+
+private:
+	UPROPERTY(EditAnywhere, Category = Tank)
+	float FireSpeed = 1000000.f;
+
 };
