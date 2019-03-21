@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "TankBarrel.h"
 
 
 // Sets default values for this component's properties
@@ -10,34 +11,53 @@ UTankAimingComponent::UTankAimingComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
+void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 {
-	Super::BeginPlay();
+	if (!Barrel) { return; } //protecting the pointer
+	
+	FVector OUTLaunchVelocity; //set to 0
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")); //socket added to barrel's mesh
+
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
+	(
+		this,
+		OUTLaunchVelocity,
+		StartLocation,
+		HitLocation,
+		FireSpeed,
+		ESuggestProjVelocityTraceOption::DoNotTrace
+	);
+
+	if(bHaveAimSolution)
+	{
+		auto AimDirection = OUTLaunchVelocity.GetSafeNormal();
+		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *GetNameSafe(GetOwner()), *AimDirection.ToString());
+		MoveBarrel(AimDirection);
+	}
 	
 }
 
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	//UE_LOG(LogTemp, Warning, TEXT("got owner: %s"), *OurTankName);
-}
+	//get the hit direction and crosshair rotation
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto AimAtRotator = AimDirection.Rotation();
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Fire Speed: %f"), FireSpeed);
+	auto DeltaRotator = AimAtRotator - BarrelRotator;
+	Barrel->Elevate(5);
+
+	
 }
 
 /*
 auto BarrelLocation = Barrel->GetComponentLocation();
 UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *GetNameSafe(GetOwner()), *HitLocation.ToString(), *BarrelLocation.ToString());
 */
+
