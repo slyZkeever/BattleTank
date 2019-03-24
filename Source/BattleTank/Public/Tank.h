@@ -36,7 +36,7 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Tank)
+	UFUNCTION(BlueprintCallable, Category = Tank) //category's name will pop up in bp's details panal  
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 
