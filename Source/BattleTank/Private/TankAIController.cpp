@@ -1,8 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Tank.h"
-
+//class header
 #include "../Public/TankAIController.h"
+//
+
+//additional header
+#include "Tank.h"
+//
 
 void ATankAIController::BeginPlay()
 {

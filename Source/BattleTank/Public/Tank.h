@@ -2,14 +2,21 @@
 
 #pragma once
 
+//additional headers
 #include "Components/StaticMeshComponent.h"
+//
 
+//default headers
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
+//
 
-class UTankBarrel; //forward declaration 
+//forward declarations
+class UTankBarrel;  
 class UTankAimingComponent;
+//
+
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -36,11 +43,11 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Tank) //category's name will pop up in bp's details panal  
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet); //reference for static mesh 
 
 
 private:
 	UPROPERTY(EditAnywhere, Category = Tank)
-	float FireSpeed = 1000000.f;
+	float FireSpeed = 1000000.f; //reference value
 
 };

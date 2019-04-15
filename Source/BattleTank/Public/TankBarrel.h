@@ -2,12 +2,15 @@
 
 #pragma once
 
+//default header
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankBarrel.generated.h"
+//
+
+
 
 //info of barrel
-
 UCLASS(meta = (BlueprintSpawnableComponent))
 /*ClassGroup = (Custom), hidecategories = ("Collision")*/
 
@@ -21,7 +24,7 @@ public:
 	
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float MaxDegreePerSecond = 5;
+		float MaxDegreePerSecond = 20;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 		float MaxElevation = 40;

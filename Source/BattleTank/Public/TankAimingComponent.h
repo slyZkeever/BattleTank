@@ -2,14 +2,19 @@
 
 #pragma once
 
+//additional headers
 #include "Kismet/GameplayStatics.h"
+//
 
+//default headers
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
+//
 
 //forward declaration
 class UTankBarrel; 
+//
 
 //holds data for barrel
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

@@ -1,8 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TankBarrel.h"
-
+//class header
 #include "TankAimingComponent.h"
+//
+
+//additional header
+#include "TankBarrel.h"
+//
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -32,25 +36,28 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 		StartLocation,
 		HitLocation,
 		FireSpeed,
-		false,
-		0,
-		0,
-		ESuggestProjVelocityTraceOption::DoNotTrace //a bug occurs, if this line is not included
+		false, 
+		0.0f,
+		0.0f,
+		ESuggestProjVelocityTraceOption::DoNotTrace //a bug occurs, if this line is not included.	 
 	);
 
-	if(bHaveAimSolution)
+	auto Time = GetWorld()->GetTimeSeconds();
+
+
+	// A crash occurs if aimed/unaimed at in-limit object, continuously.
+	// crashes when barrel is moved up and down
+	if(bHaveAimSolution) 
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *GetNameSafe(GetOwner()), *AimDirection.ToString());
 
 		auto AimDirection = OUTLaunchVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
 
-		auto Time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
 	}
-	else
+	if (!bHaveAimSolution) //this is where the prob might be cuz this is never logged in
 	{
-		auto Time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Warning, TEXT("at %f, solution not found"), Time);
 	}
 	
