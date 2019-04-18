@@ -4,6 +4,8 @@
 
 //additional headers
 #include "Kismet/GameplayStatics.h"
+//#include "Math/Rotator.h"
+//#include "Math/Vector.h"
 //
 
 //default headers
@@ -14,6 +16,7 @@
 
 //forward declaration
 class UTankBarrel; 
+class UTankTurret;
 //
 
 //holds data for barrel
@@ -35,8 +38,12 @@ public:
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
+	void SetTurretReference(UTankTurret* TurretToSet);
+
 	void MoveBarrel(FVector AimDirection);
 
 private:
 	UTankBarrel* Barrel = nullptr;
+
+	UTankTurret* Turret = nullptr;
 };

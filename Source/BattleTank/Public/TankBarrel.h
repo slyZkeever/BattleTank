@@ -2,6 +2,9 @@
 
 #pragma once
 
+//additional header
+#include "Math/UnrealMathUtility.h"
+
 //default header
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
@@ -21,10 +24,11 @@ class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 public:
 	//-1 for min value and +1 for max
 	void Elevate(float RelativeSpeed);
+
 	
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float MaxDegreePerSecond = 20;
+		float MaxDegreePerSecond = 5;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 		float MaxElevation = 40;

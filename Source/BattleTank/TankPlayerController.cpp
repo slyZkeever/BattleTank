@@ -33,7 +33,8 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 ATank* ATankPlayerController::GetTankController() const
 {
-	return Cast<ATank>(GetPawn());
+	return Cast<ATank>(GetPawn()); //convert whatever returned from function into ATank type
+	//ATank is inherited from APawn
 }
 
 void ATankPlayerController::AimAtCrosshair()
@@ -77,6 +78,8 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &
 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
 {
+	//UE_LOG(LogTemp, Warning, TEXT("vector hit location found"));
+	
 	FHitResult HitResult;
 	auto StartLocation = PlayerCameraManager->GetCameraLocation();
 	auto EndLocation = StartLocation + (LookDirection * LineTraceRange); //LookDirection wrt Startlocation 

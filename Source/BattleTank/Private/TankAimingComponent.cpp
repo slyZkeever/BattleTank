@@ -6,6 +6,7 @@
 
 //additional header
 #include "TankBarrel.h"
+#include "TankTurret.h"
 //
 
 // Sets default values for this component's properties
@@ -20,6 +21,11 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+{
+	Turret = TurretToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
@@ -42,22 +48,24 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 		ESuggestProjVelocityTraceOption::DoNotTrace //a bug occurs, if this line is not included.	 
 	);
 
-	auto Time = GetWorld()->GetTimeSeconds();
-
-
+	
 	// A crash occurs if aimed/unaimed at in-limit object, continuously.
 	// crashes when barrel is moved up and down
 	if(bHaveAimSolution) 
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *GetNameSafe(GetOwner()), *AimDirection.ToString());
 
-		auto AimDirection = OUTLaunchVelocity.GetSafeNormal();
+		FVector AimDirection = OUTLaunchVelocity.GetSafeNormal();
+
+		float Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
+		
 		MoveBarrel(AimDirection);
 
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
 	}
-	if (!bHaveAimSolution) //this is where the prob might be cuz this is never logged in
+	else //this is where the prob might be cuz this is never logged in
 	{
+		float Time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Warning, TEXT("at %f, solution not found"), Time);
 	}
 	
@@ -65,15 +73,24 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 
 void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 {
+	FRotator AimAtRotator = AimDirection.Rotation();
+	
 	//get the hit direction and crosshair rotation
-	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
 
-	auto AimAtRotator = AimDirection.Rotation();
+	FRotator BarrelDeltaRotator = AimAtRotator - BarrelRotator;
 
-	auto DeltaRotator = AimAtRotator - BarrelRotator;
 
-	//Barrel->Elevate(5); // TODO remove magic number
-	Barrel->Elevate(DeltaRotator.Pitch); // TODO remove magic number
+	FRotator TurretRotator = Turret->GetForwardVector().Rotation();
+
+	FRotator TurretDeltaRotator = AimAtRotator - TurretRotator;
+
+	
+	//UE_LOG(LogTemp, Warning, TEXT("moving barrel"));
+	
+	Barrel->Elevate(BarrelDeltaRotator.Pitch);
+
+	Turret->Rotate(TurretDeltaRotator.Yaw);
 }
 
 /*

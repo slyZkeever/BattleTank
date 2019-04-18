@@ -15,6 +15,7 @@
 //forward declarations
 class UTankBarrel;  
 class UTankAimingComponent;
+class UTankTurret;
 //
 
 
@@ -45,9 +46,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Tank) //category's name will pop up in bp's details panal  
 	void SetBarrelReference(UTankBarrel* BarrelToSet); //reference for static mesh 
 
+	UFUNCTION(BlueprintCallable, Category = Tank)   
+	void SetTurretReference(UTankBarrel* TurretToSet); 
+
 
 private:
 	UPROPERTY(EditAnywhere, Category = Tank)
-	float FireSpeed = 1000000.f; //reference value
+	float FireSpeed = 8000.f; //reference value
 
 };
